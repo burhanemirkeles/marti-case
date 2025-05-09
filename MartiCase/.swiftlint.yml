@@ -37,7 +37,6 @@ opt_in_rules: # some rules are only opt-in
   - redundant_type_annotation
   - strict_fileprivate
   - toggle_bool
-  - trailing_closure
   - unneeded_parentheses_in_closure_argument
   - unused_import
   - yoda_condition
