@@ -7,8 +7,8 @@
 
 import Foundation
 
-typealias L = LocalizedStringResource
+typealias LSR = LocalizedStringResource
 
 enum Localizables {
-  static let appTitle: L = "MartiCaseStudy"
+  static let appTitle: LSR = "MartiCaseStudy"
 }
