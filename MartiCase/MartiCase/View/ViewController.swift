@@ -48,6 +48,13 @@ class ViewController: UIViewController {
       bottomBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       bottomBar.heightAnchor.constraint(equalToConstant: 80)
     ])
+
+    bottomBar.onLeftButtonTapped = { [weak self] in
+      let routeHistoryVC = RouteHistoryViewController()
+      let navVC = UINavigationController(rootViewController: routeHistoryVC)
+      navVC.modalPresentationStyle = .fullScreen
+      self?.present(navVC, animated: true)
+    }
   }
 
   private func bindViewModel() {
