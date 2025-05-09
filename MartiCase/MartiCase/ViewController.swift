@@ -8,18 +8,18 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
 
   var bottomBar = BottomBar()
-
   var mapView = MKMapView()
+  private let viewModel = ViewModel()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     setupBottomBar()
     setupMapView()
-    // Do any additional setup after loading the view.
+    viewModel.requestPermissions()
   }
 
   private func setupMapView() {
@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     mapView.showsUserLocation = true
     mapView.userTrackingMode = .follow
     mapView.isZoomEnabled = true
+    mapView.delegate = self
     view.addSubview(mapView)
 
     NSLayoutConstraint.activate([
