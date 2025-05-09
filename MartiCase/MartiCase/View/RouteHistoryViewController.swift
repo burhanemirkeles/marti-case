@@ -28,7 +28,7 @@ final class RouteHistoryViewController: UIViewController {
       action: #selector(dismissSelf)
     )
 
-    tableView.register(RouteHistoryCell.self, forCellReuseIdentifier: RouteHistoryCell.identifier)
+    tableView.register(HistoryCell.self, forCellReuseIdentifier: HistoryCell.identifier)
     tableView.dataSource = self
     tableView.delegate = self
     tableView.tableFooterView = UIView()
@@ -57,9 +57,9 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(
-      withIdentifier: RouteHistoryCell.identifier,
+      withIdentifier: HistoryCell.identifier,
       for: indexPath
-    ) as? RouteHistoryCell else {
+    ) as? HistoryCell else {
       return UITableViewCell()
     }
     let title = viewModel.routeTitle(at: indexPath.row)
@@ -70,14 +70,5 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     // navigate to route detail if needed
-  }
-}
-
-final class RouteHistoryCell: UITableViewCell {
-  static let identifier = "RouteHistoryCell"
-
-  func configure(with title: String) {
-    textLabel?.text = title
-    textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
   }
 }
