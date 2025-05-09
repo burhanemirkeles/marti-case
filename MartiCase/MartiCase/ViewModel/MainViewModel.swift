@@ -1,5 +1,5 @@
 //
-//  Untitled.swift
+//  MainViewModel.swift
 //  MartiCase
 //
 //  Created by Emir Keleş on 9.05.2025.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class ViewModel: NSObject, CLLocationManagerDelegate {
+class MainViewModel: NSObject, CLLocationManagerDelegate {
   private let locationManager = CLLocationManager()
   private(set) var trackedPoints: [LocationPoint] = []
   var onLocationUpdate: ((LocationPoint) -> Void)?
