@@ -12,6 +12,7 @@ public final class BottomBar: UIView {
   private var leftButton = UIButton()
   private var centerButton = UIButton()
   private var rightButton = UIButton()
+  public var onLeftButtonTapped: (() -> Void)?
   public var onCenterButtonTapped: (() -> Void)?
 
   init() {
@@ -37,6 +38,7 @@ public final class BottomBar: UIView {
     leftButton.layer.cornerRadius = 25
     leftButton.layer.borderWidth = 1
     leftButton.layer.borderColor = UIColor.lightGray.cgColor
+    leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
 
     centerButton.setTitle("Go Offline", for: .normal)
     centerButton.setTitleColor(.white, for: .normal)
@@ -78,6 +80,11 @@ public final class BottomBar: UIView {
       centerButton.heightAnchor.constraint(equalToConstant: 40),
       centerButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 120)
     ])
+  }
+
+  @objc
+  func leftButtonTapped() {
+    onLeftButtonTapped?()
   }
 
   @objc
