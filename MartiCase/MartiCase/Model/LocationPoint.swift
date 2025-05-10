@@ -9,6 +9,6 @@ import Foundation
 import CoreLocation
 
 struct LocationPoint {
-  let coordinate: CLLocationCoordinate2D
+  let location: CLLocation
   let timestamp: Date
 }
