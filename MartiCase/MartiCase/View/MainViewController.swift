@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  MartiCase
 //
 //  Created by Emir Keleş on 8.05.2025.
@@ -8,10 +8,10 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
   var bottomBar = BottomBar()
   var mapView = MKMapView()
-  private let viewModel = ViewModel()
+  private let viewModel = MainViewModel()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -48,6 +48,13 @@ class ViewController: UIViewController {
       bottomBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       bottomBar.heightAnchor.constraint(equalToConstant: 80)
     ])
+
+    bottomBar.onLeftButtonTapped = { [weak self] in
+      let routeHistoryVC = RouteHistoryViewController()
+      let navVC = UINavigationController(rootViewController: routeHistoryVC)
+      navVC.modalPresentationStyle = .fullScreen
+      self?.present(navVC, animated: true)
+    }
   }
 
   private func bindViewModel() {
@@ -94,7 +101,7 @@ class ViewController: UIViewController {
   }
 }
 
-extension ViewController: MKMapViewDelegate {
+extension MainViewController: MKMapViewDelegate {
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     if let polyline = overlay as? MKPolyline {
       let renderer = MKPolylineRenderer(overlay: polyline)

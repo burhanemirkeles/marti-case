@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7580C0B12DCFAD24000182B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7580C0B02DCFAD24000182B2 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		756BCDE12DCCF474007BEF7D /* MartiCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MartiCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7580C0B12DCFAD24000182B2 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,7 @@
 			);
 			name = MartiCase;
 			packageProductDependencies = (
+				7580C0B02DCFAD24000182B2 /* SnapKit */,
 			);
 			productName = MartiCase;
 			productReference = 756BCDE12DCCF474007BEF7D /* MartiCase.app */;
@@ -109,6 +115,9 @@
 			);
 			mainGroup = 756BCDD82DCCF474007BEF7D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7580C0AF2DCFAD24000182B2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 756BCDE22DCCF474007BEF7D /* Products */;
 			projectDirPath = "";
@@ -355,6 +364,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7580C0AF2DCFAD24000182B2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7580C0B02DCFAD24000182B2 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7580C0AF2DCFAD24000182B2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 756BCDD92DCCF474007BEF7D /* Project object */;
 }
