@@ -10,11 +10,34 @@ import CoreLocation
 
 class MainViewModel: NSObject, CLLocationManagerDelegate {
   private let locationManager = CLLocationManager()
+  public var currentLocation: CLLocation?
   private(set) var trackedPoints: [LocationPoint] = []
+
   var onLocationUpdate: ((LocationPoint) -> Void)?
+  var onTrackingStatusChanged: ((Bool) -> Void)?
+  var onRecordingFinished: ((String) -> Void)?
+
+  var isTracking: Bool = false {
+    didSet {
+      onTrackingStatusChanged?(isTracking)
+    }
+  }
+
+  func toggleTracking() {
+    isTracking.toggle()
+
+    if isTracking {
+      startTracking()
+      guard let location = locationManager.location else { return }
+      trackedPoints.append(LocationPoint(location: location, timestamp: Date()))
+    } else {
+      stopTracking()
+    }
+  }
 
   override init() {
     super.init()
+    locationManager.delegate = self
     configureLocationManager()
   }
 
@@ -30,23 +53,27 @@ class MainViewModel: NSObject, CLLocationManagerDelegate {
   }
 
   func startTracking() {
+    trackedPoints = []
     locationManager.startUpdatingLocation()
   }
 
   func stopTracking() {
     locationManager.stopUpdatingLocation()
+    onRecordingFinished?("tracking points message")
   }
 
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    guard let lastLocation = locations.last else { return }
+    if isTracking {
+      guard let lastLocation = locations.last else { return }
 
-    let newPoint = LocationPoint(
-      coordinate: lastLocation.coordinate,
-      timestamp: Date()
-    )
-
-    trackedPoints.append(newPoint)
-    onLocationUpdate?(newPoint)
+      let newPoint = LocationPoint(
+        location: lastLocation,
+        timestamp: Date()
+      )
+      trackedPoints.append(newPoint)
+      onLocationUpdate?(newPoint)
+    }
+    currentLocation = locations.last
   }
 
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

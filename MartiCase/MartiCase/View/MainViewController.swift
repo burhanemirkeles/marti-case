@@ -75,6 +75,22 @@ class MainViewController: UIViewController {
       let locationPoint = LocationPoint(location: self?.viewModel.currentLocation ?? CLLocation(), timestamp: Date())
       self?.addMarker(for: locationPoint)
     }
+
+    viewModel.onTrackingStatusChanged = { [weak self] isTracking in
+      DispatchQueue.main.async {
+        self?.bottomBar.updateCenterButtonTitle(isTracking: isTracking)
+        self?.viewDidLayoutSubviews()
+      }
+    }
+
+    viewModel.onRecordingFinished = { [weak self] messsage in
+      let alertVC = CustomAlertViewController(title: "title", message: messsage, preferredStyle: .alert)
+      alertVC.modalPresentationStyle = .overFullScreen
+      alertVC.modalTransitionStyle = .crossDissolve
+      self?.present(alertVC, animated: true)
+      guard let annotations = self?.mapView.annotations else { return }
+      self?.mapView.removeAnnotations(annotations)
+    }
   }
 
   private func addMarker(for point: LocationPoint) {
