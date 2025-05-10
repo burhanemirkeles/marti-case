@@ -70,8 +70,4 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
     tableView.deselectRow(at: indexPath, animated: true)
     // navigate to route detail if needed
   }
-
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    350
-  }
 }

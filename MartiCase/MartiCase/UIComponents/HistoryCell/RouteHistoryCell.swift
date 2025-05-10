@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public struct RouteHistoryCellItem {
   let title: String
@@ -44,15 +45,18 @@ class RouteHistoryCell: UITableViewCell {
     addSubview(topView)
     addSubview(bottomView)
 
-    NSLayoutConstraint.activate([
-      topView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-      topView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-      topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+    topView.snp.makeConstraints {
+      $0.top.equalToSuperview()
+      $0.leading.equalToSuperview()
+      $0.trailing.equalToSuperview()
+    }
 
-      bottomView.topAnchor.constraint(equalTo: topView.bottomAnchor, constant: 12),
-      bottomView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-      bottomView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-      bottomView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
-    ])
+    bottomView.snp.makeConstraints {
+      $0.top.equalTo(topView.snp.bottom).offset(12)
+      $0.leading.equalToSuperview()
+      $0.trailing.equalToSuperview()
+      $0.bottom.equalToSuperview()
+    }
+    layoutIfNeeded()
   }
 }
