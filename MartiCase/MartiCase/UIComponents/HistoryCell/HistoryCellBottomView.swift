@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public struct HistoryCellBottomViewItem {
   let startingPoint: TopTitleBottomDetailLabelViewItem
@@ -16,6 +17,7 @@ public final class HistoryCellBottomView: UIView {
   // MARK: - Subviews -
   private var startingInfoView = TopTitleBottomDetailLabelView()
   private var endingInfoView = TopTitleBottomDetailLabelView()
+  private var imageView = UIImageView()
   private var item: HistoryCellBottomViewItem?
 
   public init() {
@@ -34,38 +36,38 @@ public final class HistoryCellBottomView: UIView {
 
   private func setupView() {
     guard let item else { return }
-    startingInfoView.configure(
-      with: TopTitleBottomDetailLabelViewItem(
-        title: item.startingPoint.title,
-        detail: item.startingPoint.detail
-      )
-    )
-    endingInfoView.configure(
-      with: TopTitleBottomDetailLabelViewItem(
-        title: item.endingPoint.title,
-        detail: item.endingPoint.detail
-      )
-    )
-    startingInfoView.translatesAutoresizingMaskIntoConstraints = false
-    endingInfoView.translatesAutoresizingMaskIntoConstraints = false
+
+    startingInfoView.configure(with: item.startingPoint)
+    endingInfoView.configure(with: item.endingPoint)
+
+    imageView.image = .fromTo
+    imageView.tintColor = .gray
+    imageView.contentMode = .scaleAspectFit
+
+    addSubview(startingInfoView)
+    addSubview(endingInfoView)
+    addSubview(imageView)
   }
 
   private func setConstraints() {
-    addSubview(startingInfoView)
-    addSubview(endingInfoView)
+    startingInfoView.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(8)
+      $0.leading.equalToSuperview().offset(40)
+      $0.trailing.equalToSuperview().offset(-12)
+    }
 
-    NSLayoutConstraint.activate([
-      startingInfoView.topAnchor.constraint(equalTo: topAnchor),
-      startingInfoView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      startingInfoView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      startingInfoView.heightAnchor.constraint(equalToConstant: 42),
+    endingInfoView.snp.makeConstraints {
+      $0.top.equalTo(startingInfoView.snp.bottom).offset(24)
+      $0.leading.equalToSuperview().offset(40)
+      $0.trailing.equalToSuperview().offset(-12)
+      $0.bottom.equalToSuperview().offset(-8)
+    }
 
-      endingInfoView.topAnchor.constraint(equalTo: startingInfoView.bottomAnchor, constant: 24),
-      endingInfoView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      endingInfoView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      endingInfoView.heightAnchor.constraint(equalToConstant: 42),
-
-      endingInfoView.bottomAnchor.constraint(equalTo: bottomAnchor)
-    ])
+    imageView.snp.makeConstraints {
+      $0.top.equalTo(startingInfoView.snp.centerY)
+      $0.leading.equalToSuperview().offset(8)
+      $0.centerY.equalTo(startingInfoView.snp.bottom).offset(12)
+      $0.bottom.equalTo(endingInfoView.snp.centerY)
+    }
   }
 }
