@@ -64,16 +64,22 @@ class MainViewController: UIViewController {
 
       let points = self.viewModel.trackedPoints
       if points.count >= 2 {
-        let from = points[points.count - 2].coordinate
-        let to = points[points.count - 1].coordinate
+        let from = points[points.count - 2].location.coordinate
+        let to = points[points.count - 1].location.coordinate
         self.drawRoute(from: from, to: to)
       }
+    }
+
+    bottomBar.onCenterButtonTapped = { [weak self] in
+      self?.viewModel.toggleTracking()
+      let locationPoint = LocationPoint(location: self?.viewModel.currentLocation ?? CLLocation(), timestamp: Date())
+      self?.addMarker(for: locationPoint)
     }
   }
 
   private func addMarker(for point: LocationPoint) {
     let annotation = MKPointAnnotation()
-    annotation.coordinate = point.coordinate
+    annotation.coordinate = point.location.coordinate
     let formatter = DateFormatter()
     formatter.timeStyle = .medium
     annotation.title = "Moved to new point"
