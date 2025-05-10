@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public struct TopTitleBottomDetailLabelViewItem {
   public var title: String
@@ -51,18 +52,18 @@ public final class TopTitleBottomDetailLabelView: UIView {
     addSubview(titleLabel)
     addSubview(detailLabel)
 
-    NSLayoutConstraint.activate([
-      //      stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      //      stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      //      stackView.topAnchor.constraint(equalTo: topAnchor),
-      //      stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+    titleLabel.snp.makeConstraints {
+      $0.leading.equalToSuperview()
+      $0.top.equalToSuperview()
+      $0.trailing.equalToSuperview()
+    }
 
-      titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-      titleLabel.topAnchor.constraint(equalTo: topAnchor),
-      titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      detailLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-      detailLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-      detailLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8)
-    ])
+    detailLabel.snp.makeConstraints {
+      $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+      $0.leading.equalToSuperview()
+      $0.trailing.equalToSuperview()
+      $0.bottom.equalToSuperview().offset(-8)
+    }
+    layoutIfNeeded()
   }
 }

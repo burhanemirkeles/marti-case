@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7580C0B12DCFAD24000182B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7580C0B02DCFAD24000182B2 /* SnapKit */; };
-		7580C0B32DCFAD24000182B2 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7580C0B22DCFAD24000182B2 /* SnapKit-Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7580C0B12DCFAD24000182B2 /* SnapKit in Frameworks */,
-				7580C0B32DCFAD24000182B2 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +85,6 @@
 			name = MartiCase;
 			packageProductDependencies = (
 				7580C0B02DCFAD24000182B2 /* SnapKit */,
-				7580C0B22DCFAD24000182B2 /* SnapKit-Dynamic */,
 			);
 			productName = MartiCase;
 			productReference = 756BCDE12DCCF474007BEF7D /* MartiCase.app */;
@@ -384,11 +381,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7580C0AF2DCFAD24000182B2 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		7580C0B22DCFAD24000182B2 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7580C0AF2DCFAD24000182B2 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 public struct HistoryCellTopViewItem {
   public var title: String
@@ -48,15 +49,20 @@ public final class HistoryCellTopView: UIView {
     addSubview(imageView)
     addSubview(titleLabel)
 
-    NSLayoutConstraint.activate([
-      imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
-      imageView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-      imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-      imageView.widthAnchor.constraint(equalToConstant: 40),
-      imageView.heightAnchor.constraint(equalToConstant: 40),
+    imageView.snp.makeConstraints {
+      $0.leading.equalToSuperview().offset(18)
+      $0.height.width.equalTo(40)
+      $0.top.equalToSuperview().offset(12)
+      $0.bottom.equalToSuperview().offset(-12)
+    }
 
-      titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 18),
-      titleLabel.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
-    ])
+    titleLabel.snp.makeConstraints {
+      $0.leading.equalTo(imageView.snp.trailing).offset(18)
+      $0.trailing.equalToSuperview().offset(-18)
+      $0.centerY.equalTo(imageView.snp.centerY)
+      $0.top.equalToSuperview().offset(12)
+      $0.bottom.equalToSuperview().offset(-12)
+    }
+    layoutIfNeeded()
   }
 }
