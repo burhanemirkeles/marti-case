@@ -40,7 +40,7 @@ public final class BottomBar: UIView {
     leftButton.layer.borderColor = UIColor.lightGray.cgColor
     leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
 
-    centerButton.setTitle("Go Offline", for: .normal)
+    centerButton.setTitle("Start Recording", for: .normal)
     centerButton.setTitleColor(.white, for: .normal)
     centerButton.backgroundColor = .systemBlue
     centerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -53,6 +53,11 @@ public final class BottomBar: UIView {
     rightButton.layer.cornerRadius = 25
     rightButton.layer.borderWidth = 1
     rightButton.layer.borderColor = UIColor.lightGray.cgColor
+  }
+
+  func updateCenterButtonTitle(isTracking: Bool) {
+    let title = isTracking ? "Stop" : "Start"
+    centerButton.setTitle(title, for: .normal)
   }
 
   private func setConstraints() {
