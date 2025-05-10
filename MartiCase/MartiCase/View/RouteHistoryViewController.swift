@@ -28,7 +28,7 @@ final class RouteHistoryViewController: UIViewController {
       action: #selector(dismissSelf)
     )
 
-    tableView.register(HistoryCell.self, forCellReuseIdentifier: HistoryCell.identifier)
+    tableView.register(RouteHistoryCell.self, forCellReuseIdentifier: RouteHistoryCell.identifier)
     tableView.dataSource = self
     tableView.delegate = self
     tableView.tableFooterView = UIView()
@@ -52,23 +52,26 @@ final class RouteHistoryViewController: UIViewController {
 
 extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.numberOfRows()
+    return 1
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(
-      withIdentifier: HistoryCell.identifier,
+      withIdentifier: RouteHistoryCell.identifier,
       for: indexPath
-    ) as? HistoryCell else {
+    ) as? RouteHistoryCell else {
       return UITableViewCell()
     }
-    let title = viewModel.routeTitle(at: indexPath.row)
-    cell.configure(with: title)
+    cell.configure(with: RouteHistoryCellItem(title: "10/05/2025 | Beşiktaş"))
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     // navigate to route detail if needed
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    350
   }
 }
