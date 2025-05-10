@@ -52,7 +52,7 @@ final class RouteHistoryViewController: UIViewController {
 
 extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.numberOfRows()
+    return 1
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,8 +62,7 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
     ) as? RouteHistoryCell else {
       return UITableViewCell()
     }
-    let title = viewModel.routeTitle(at: indexPath.row)
-    cell.configure(with: title)
+    cell.configure(with: RouteHistoryCellItem(title: "10/05/2025 | Beşiktaş"))
     return cell
   }
 
@@ -71,13 +70,8 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
     tableView.deselectRow(at: indexPath, animated: true)
     // navigate to route detail if needed
   }
-}
 
-final class RouteHistoryCell: UITableViewCell {
-  static let identifier = "RouteHistoryCell"
-
-  func configure(with title: String) {
-    textLabel?.text = title
-    textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    350
   }
 }
