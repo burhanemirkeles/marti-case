@@ -40,7 +40,7 @@ public final class BottomBar: UIView {
     leftButton.layer.borderColor = UIColor.lightGray.cgColor
     leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
 
-    centerButton.setTitle("Start Recording", for: .normal)
+    centerButton.setTitle("Start", for: .normal)
     centerButton.setTitleColor(.white, for: .normal)
     centerButton.backgroundColor = .systemBlue
     centerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
