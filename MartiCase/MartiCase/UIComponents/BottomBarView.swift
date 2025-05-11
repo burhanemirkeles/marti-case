@@ -11,7 +11,6 @@ public final class BottomBar: UIView {
   // MARK: - Subviews -
   private var leftButton = UIButton()
   private var centerButton = UIButton()
-  private var rightButton = UIButton()
   public var onLeftButtonTapped: (() -> Void)?
   public var onCenterButtonTapped: (() -> Void)?
 
@@ -46,13 +45,6 @@ public final class BottomBar: UIView {
     centerButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
     centerButton.layer.cornerRadius = 20
     centerButton.addTarget(self, action: #selector(centerButtonTapped), for: .touchUpInside)
-
-    rightButton.setImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
-    rightButton.tintColor = .black
-    rightButton.backgroundColor = .white
-    rightButton.layer.cornerRadius = 25
-    rightButton.layer.borderWidth = 1
-    rightButton.layer.borderColor = UIColor.lightGray.cgColor
   }
 
   func updateCenterButtonTitle(isTracking: Bool) {
@@ -61,16 +53,15 @@ public final class BottomBar: UIView {
   }
 
   private func setConstraints() {
-    let stackView = UIStackView(arrangedSubviews: [leftButton, centerButton, rightButton])
+    let stackView = UIStackView(arrangedSubviews: [leftButton, centerButton])
     stackView.axis = .horizontal
-    stackView.alignment = .center
-    stackView.distribution = .equalCentering
+    stackView.alignment = .fill
+    stackView.distribution = .fillEqually
     stackView.spacing = 16
 
     addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
     leftButton.translatesAutoresizingMaskIntoConstraints = false
-    rightButton.translatesAutoresizingMaskIntoConstraints = false
     centerButton.translatesAutoresizingMaskIntoConstraints = false
 
     NSLayoutConstraint.activate([
@@ -80,10 +71,8 @@ public final class BottomBar: UIView {
       stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8),
       leftButton.widthAnchor.constraint(equalToConstant: 50),
       leftButton.heightAnchor.constraint(equalToConstant: 50),
-      rightButton.widthAnchor.constraint(equalToConstant: 50),
-      rightButton.heightAnchor.constraint(equalToConstant: 50),
-      centerButton.heightAnchor.constraint(equalToConstant: 40),
-      centerButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 120)
+      centerButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 120),
+      centerButton.heightAnchor.constraint(equalToConstant: 50)
     ])
   }
 
