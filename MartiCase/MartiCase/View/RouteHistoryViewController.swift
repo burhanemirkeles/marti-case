@@ -38,6 +38,8 @@ final class RouteHistoryViewController: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.tableFooterView = UIView()
+    tableView.allowsSelection = false
+    tableView.bounces = false
 
     view.addSubview(tableView)
     tableView.translatesAutoresizingMaskIntoConstraints = false
