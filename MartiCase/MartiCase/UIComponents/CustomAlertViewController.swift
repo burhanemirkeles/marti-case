@@ -46,14 +46,14 @@ public final class CustomAlertViewController: UIAlertController {
     buttonsStackView.distribution = .fillEqually
     buttonsStackView.spacing = 12
 
-    cancelButton.setTitle("Cancel", for: .normal)
+    cancelButton.setTitle("No", for: .normal)
     cancelButton.setTitleColor(.systemBlue, for: .normal)
     cancelButton.titleLabel?.font = .boldSystemFont(ofSize: 18)
     cancelButton.backgroundColor = .gray.withAlphaComponent(0.1)
     cancelButton.layer.cornerRadius = 12
     cancelButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
 
-    doneButton.setTitle("Done", for: .normal)
+    doneButton.setTitle("Yes", for: .normal)
     doneButton.setTitleColor(.white, for: .normal)
     doneButton.titleLabel?.font = .boldSystemFont(ofSize: 18)
     doneButton.backgroundColor = .systemBlue

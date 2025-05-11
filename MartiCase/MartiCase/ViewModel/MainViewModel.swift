@@ -28,8 +28,11 @@ class MainViewModel: NSObject, CLLocationManagerDelegate {
 
     if isTracking {
       startTracking()
-      guard let location = locationManager.location else { return }
-      trackedPoints.append(LocationPoint(location: location, timestamp: Date()))
+      if trackedPoints.isEmpty {
+        guard let location = locationManager.location else { return }
+        trackedPoints.append(LocationPoint(location: location, timestamp: Date()))
+      }
+
     } else {
       stopTracking()
     }
@@ -59,7 +62,7 @@ class MainViewModel: NSObject, CLLocationManagerDelegate {
 
   func stopTracking() {
     locationManager.stopUpdatingLocation()
-    onRecordingFinished?("tracking points message")
+    onRecordingFinished?("Do you want to save your route?")
   }
 
   func getRouteHistoryItem(from locations: [LocationPoint], completion: @escaping (SavingRouteModel?) -> Void) {
@@ -129,7 +132,7 @@ class MainViewModel: NSObject, CLLocationManagerDelegate {
 
       let newPoint = LocationPoint(
         location: lastLocation,
-        timestamp: Date()
+        timestamp: lastLocation.timestamp
       )
       trackedPoints.append(newPoint)
       onLocationUpdate?(newPoint)
@@ -138,8 +141,12 @@ class MainViewModel: NSObject, CLLocationManagerDelegate {
   }
 
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    if status == .authorizedAlways || status == .authorizedWhenInUse {
+    switch manager.authorizationStatus {
+    case .authorizedAlways:
+      manager.allowsBackgroundLocationUpdates = true
       startTracking()
+    default:
+      manager.allowsBackgroundLocationUpdates = false
     }
   }
 }

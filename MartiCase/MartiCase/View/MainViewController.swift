@@ -20,6 +20,24 @@ class MainViewController: UIViewController {
     setupMapView()
     viewModel.requestPermissions()
     bindViewModel()
+
+    //    NotificationCenter.default.addObserver(
+    //      self,
+    //      selector: #selector(reloadMap),
+    //      name: NSNotification.Name("reloadMap"),
+    //      object: nil
+    //    )
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(reloadMap),
+      name: NSNotification.Name("reloadMap"),
+      object: nil
+    )
   }
 
   private func setupMapView() {
@@ -73,7 +91,9 @@ class MainViewController: UIViewController {
     bottomBar.onCenterButtonTapped = { [weak self] in
       self?.viewModel.toggleTracking()
       let locationPoint = LocationPoint(location: self?.viewModel.currentLocation ?? CLLocation(), timestamp: Date())
-      self?.addMarker(for: locationPoint)
+      if self?.viewModel.isTracking ?? false {
+        self?.addMarker(for: locationPoint)
+      }
     }
 
     viewModel.onTrackingStatusChanged = { [weak self] isTracking in
@@ -84,18 +104,16 @@ class MainViewController: UIViewController {
     }
 
     viewModel.onRecordingFinished = { [weak self] messsage in
-      let alertVC = CustomAlertViewController(title: "title", message: messsage, preferredStyle: .alert)
+      let alertVC = CustomAlertViewController(title: "Route Tracked!", message: messsage, preferredStyle: .alert)
       alertVC.modalPresentationStyle = .overFullScreen
       alertVC.modalTransitionStyle = .crossDissolve
 
-      alertVC.doneButtonAction = {[weak self] in
-      self?.viewModel.getRouteHistoryItem(from: self?.viewModel.trackedPoints ?? []) { route in
+      alertVC.doneButtonAction = { [weak self] in
+        self?.viewModel.getRouteHistoryItem(from: self?.viewModel.trackedPoints ?? []) { route in
           guard let route else { return }
           CoreDataHelper.shared.saveRoute(for: route)
         }
-
-        let routess = CoreDataHelper.shared.fetchRoutes()
-        print(routess)
+        self?.mapView.removeOverlays(self?.mapView.overlays ?? [])
       }
 
       self?.present(alertVC, animated: true)
@@ -130,6 +148,22 @@ class MainViewController: UIViewController {
         return
       }
       self.mapView.addOverlay(route.polyline)
+    }
+  }
+
+  @objc
+  private func reloadMap() {
+    //     When app enters foreground, redraw the path and markers
+    mapView.removeOverlays(mapView.overlays)
+    mapView.removeAnnotations(mapView.annotations)
+
+    let points = viewModel.trackedPoints
+    for point in points {
+      addMarker(for: point)
+    }
+
+    for i in 0..<points.count {
+      drawRoute(from: points[i - 1].location.coordinate, to: points[i].location.coordinate)
     }
   }
 }
