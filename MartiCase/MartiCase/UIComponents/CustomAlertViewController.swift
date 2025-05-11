@@ -15,6 +15,7 @@ public final class CustomAlertViewController: UIAlertController {
   private var buttonsStackView = UIStackView()
   private var cancelButton = UIButton()
   private var doneButton = UIButton()
+  public var doneButtonAction: (() -> Void)?
 
   private let alertView = UIView()
 
@@ -111,5 +112,6 @@ public final class CustomAlertViewController: UIAlertController {
   private func dismissAlert() {
     print("dissmiss tapped")
     self.dismiss(animated: true)
+    self.doneButtonAction?()
   }
 }

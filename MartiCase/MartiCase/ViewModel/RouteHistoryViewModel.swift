@@ -5,26 +5,24 @@
 //  Created by Emir Keleş on 10.05.2025.
 //
 
+import UIKit
+import CoreData
+
 final class RouteHistoryViewModel {
-  private(set) var routes: [String] = []
+  private(set) var routes: [SavedRoute] = []
 
-  init() {
-    loadDummyRoutes()
-  }
+  func loadRoutes(completion: @escaping () -> Void) {
+    // swiftlint: disable force_cast
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    // swiftlint: enable force_cast
+    let fetchRequest: NSFetchRequest<SavedRoute> = SavedRoute.fetchRequest()
 
-  private func loadDummyRoutes() {
-    routes = [
-      "Sabah Yürüyüşü - 08:00",
-      "Akşam Koşusu - 18:30",
-      "Köpek Gezdirme - Yesterday",
-    ]
-  }
-
-  func numberOfRows() -> Int {
-    return routes.count
-  }
-
-  func routeTitle(at index: Int) -> String {
-    return routes[index]
+    do {
+      let savedRoutes = try context.fetch(fetchRequest)
+      self.routes = savedRoutes
+      completion()
+    } catch {
+      print("Failed to fetch routes: \(error)")
+    }
   }
 }

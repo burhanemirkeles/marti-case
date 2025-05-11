@@ -87,6 +87,17 @@ class MainViewController: UIViewController {
       let alertVC = CustomAlertViewController(title: "title", message: messsage, preferredStyle: .alert)
       alertVC.modalPresentationStyle = .overFullScreen
       alertVC.modalTransitionStyle = .crossDissolve
+
+      alertVC.doneButtonAction = {[weak self] in
+      self?.viewModel.getRouteHistoryItem(from: self?.viewModel.trackedPoints ?? []) { route in
+          guard let route else { return }
+          CoreDataHelper.shared.saveRoute(for: route)
+        }
+
+        let routess = CoreDataHelper.shared.fetchRoutes()
+        print(routess)
+      }
+
       self?.present(alertVC, animated: true)
       guard let annotations = self?.mapView.annotations else { return }
       self?.mapView.removeAnnotations(annotations)
