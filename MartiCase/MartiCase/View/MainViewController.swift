@@ -20,13 +20,6 @@ class MainViewController: UIViewController {
     setupMapView()
     viewModel.requestPermissions()
     bindViewModel()
-
-    //    NotificationCenter.default.addObserver(
-    //      self,
-    //      selector: #selector(reloadMap),
-    //      name: NSNotification.Name("reloadMap"),
-    //      object: nil
-    //    )
   }
 
   override func viewWillAppear(_ animated: Bool) {
