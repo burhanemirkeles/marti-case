@@ -58,7 +58,7 @@ public final class CustomAlertViewController: UIAlertController {
     doneButton.titleLabel?.font = .boldSystemFont(ofSize: 18)
     doneButton.backgroundColor = .systemBlue
     doneButton.layer.cornerRadius = 12
-    doneButton.addTarget(self, action: #selector(dismissAlert), for: .touchUpInside)
+    doneButton.addTarget(self, action: #selector(saveRoute), for: .touchUpInside)
   }
 
   private func setupViews() {
@@ -110,7 +110,11 @@ public final class CustomAlertViewController: UIAlertController {
 
   @objc
   private func dismissAlert() {
-    print("dissmiss tapped")
+    self.dismiss(animated: true)
+  }
+
+  @objc
+  private func saveRoute() {
     self.dismiss(animated: true)
     self.doneButtonAction?()
   }
