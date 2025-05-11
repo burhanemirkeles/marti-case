@@ -15,6 +15,12 @@ final class RouteHistoryViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupView()
+
+    viewModel.loadRoutes {
+      DispatchQueue.main.async {
+        self.tableView.reloadData()
+      }
+    }
   }
 
   private func setupView() {
@@ -52,7 +58,7 @@ final class RouteHistoryViewController: UIViewController {
 
 extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return viewModel.routes.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,7 +68,19 @@ extension RouteHistoryViewController: UITableViewDataSource, UITableViewDelegate
     ) as? RouteHistoryCell else {
       return UITableViewCell()
     }
-    cell.configure(with: RouteHistoryCellItem(title: "10/05/2025 | Beşiktaş"))
+    let route = viewModel.routes[indexPath.row]
+    cell.configure(
+      with: SavingRouteModel(
+        title: route.title ?? "",
+        date: Date(),
+        startingPointData: TopTitleBottomDetailLabelViewItem(
+          title: route.startingPointTitle ?? "",
+          detail: route.startinPointDetail ?? ""
+        ), endingPointData: TopTitleBottomDetailLabelViewItem(
+          title: route.endingPointTitle ?? "", detail: route.endingPointDetail ?? ""
+        )
+      )
+    )
     return cell
   }
 

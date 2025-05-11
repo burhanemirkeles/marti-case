@@ -13,9 +13,14 @@ public class CoreDataHelper {
   // swiftlint: disable force_cast
   private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   // swiftlint: enable force_cast
-  public func saveRoute(item: String) {
+  public func saveRoute(for item: SavingRouteModel) {
     let route = SavedRoute(context: context)
-    route.title = item
+    route.title = item.title
+    route.date = item.date
+    route.startingPointTitle = item.startingPointData.title
+    route.startinPointDetail = item.startingPointData.detail
+    route.endingPointTitle = item.endingPointData.title
+    route.endingPointDetail = item.endingPointData.detail
 
     do {
       try context.save()

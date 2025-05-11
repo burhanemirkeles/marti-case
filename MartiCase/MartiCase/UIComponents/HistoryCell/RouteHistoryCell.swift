@@ -8,19 +8,15 @@
 import UIKit
 import SnapKit
 
-public struct RouteHistoryCellItem {
-  let title: String
-}
-
 class RouteHistoryCell: UITableViewCell {
   static let identifier = "RouteHistoryCell"
-  var item: RouteHistoryCellItem?
+  var item: SavingRouteModel?
 
   // MARK: - Subviews -
   let topView = HistoryCellTopView()
   let bottomView = HistoryCellBottomView()
 
-  func configure(with item: RouteHistoryCellItem) {
+  func configure(with item: SavingRouteModel) {
     self.item = item
 
     topView.configure(with: HistoryCellTopViewItem(title: item.title))
@@ -28,11 +24,12 @@ class RouteHistoryCell: UITableViewCell {
     bottomView.configure(
       with: HistoryCellBottomViewItem(
         startingPoint: TopTitleBottomDetailLabelViewItem(
-          title: "Şair Nedim Cad 43",
-          detail: "Beşiktaş İstanbul"
+          title: item.startingPointData.title,
+          detail: item.startingPointData.detail
         ), endingPoint: TopTitleBottomDetailLabelViewItem(
-          title: "Ihlamurdere Cad 21",
-          detail: "Beşiktaş İstanbul")
+          title: item.endingPointData.title,
+          detail: item.endingPointData.detail
+        )
       )
     )
     topView.translatesAutoresizingMaskIntoConstraints = false
